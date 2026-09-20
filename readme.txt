@@ -1,0 +1,15 @@
+MetaSS is a meta method for predicting protein secondary structure 
+by combining different methods. 
+
+Install
+The program can be after the perl is installed. 
+The perl program is deposited in the install directory.
+
+Running command
+perl ssrun.pl -metass E:\Udisk128\projects\MetaSS\example\seq.fasta
+
+The sequence path should be absolute directory.
+
+Download link
+https://pan.baidu.com/s/1SmvH-k_Li83ezskDpCI9Ag?pwd=1234 
+code: 1234
