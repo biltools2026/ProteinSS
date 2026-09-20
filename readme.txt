@@ -2,7 +2,7 @@ MetaSS is a meta method for predicting protein secondary structure
 by combining different methods. 
 
 Install
-The program can be after the perl is installed. 
+The program can be run after the perl is installed. 
 The perl program is deposited in the install directory.
 
 Running command
