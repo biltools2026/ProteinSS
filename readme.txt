@@ -15,3 +15,7 @@ https://pan.baidu.com/s/1IwsqQBPW_bUbmtCzp2wqmA?pwd=1234
 code: 1234
 
 Currently, the program can only be run in Windows systems.
+
+Performance
+The model was trained on a data set consisting of 10,000 protein chains.
+And the accuracy of Q3 exceeds 80%.
