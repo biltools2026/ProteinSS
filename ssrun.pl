@@ -1,3 +1,6 @@
+#!/usr/bin/perl
+
+
 use Cwd;
 
 #if (@ARGV<1){die($help);}
@@ -73,19 +76,19 @@ my @Gonnet = (
 %threetoone = ('GLY'=>'G','ALA'=>'A','VAL'=>'V','LEU'=>'L','ILE'=>'I','SER'=>'S','THR'=>'T','CYS'=>'C','MET'=>'M','PRO'=>'P','ASP'=>'D','ASN'=>'N','GLU'=>'E','GLN'=>'Q','LYS'=>'K','ARG'=>'R','HIS'=>'H','PHE'=>'F','TYR'=>'Y','TRP'=>'W','ASX'=>'B','GLX'=>'Z','UNK'=>'X','G'=>'GLY','A'=>'ALA','V'=>'VAL','L'=>'LEU','I'=>'ILE','S'=>'SER','T'=>'THR','C'=>'CYS','M'=>'MET','P'=>'PRO','D'=>'ASP','N'=>'ASN','E'=>'GLU','Q'=>'GLN','K'=>'LYS','R'=>'ARG','H'=>'HIS','F'=>'PHE','Y'=>'TYR','W'=>'TRP','a'=>'ALA','b'=>'ASN','c'=>'CYS','d'=>'ASP','e'=>'GLU','f'=>'PHE','g'=>'GLY','h'=>'HIS','i'=>'ILE','j'=>'GLY','k'=>'LYS','l'=>'LEU','m'=>'MET','n'=>'ASN','o'=>'GLY','p'=>'PRO','q'=>'GLN','r'=>'ARG','s'=>'SER','t'=>'THR','u'=>'GLY','v'=>'VAL','w'=>'TRP','x'=>'GLY','y'=>'TYR','z'=>'GLN','B'=>'ASN','Z'=>'GLN','X'=>'GLY');
 @AA = qw(C M F I L V W Y A G T S Q N E D H R K P);
 
-# ¶ş¼¶½á¹¹µ½±àÂëµÄÓ³Éä
+# äºŒçº§ç»“æ„åˆ°ç¼–ç çš„æ˜ å°„
 %SS = (
-    'H' => 2,    # ÂİĞı
-    'E' => 4,    # Æ¬²ã
-    'T' => 3,    # ×ª½Ç
-    'C' => 1,    # ÎŞ¹æ¾íÇú
+    'H' => 2,    # èºæ—‹
+    'E' => 4,    # ç‰‡å±‚
+    'T' => 3,    # è½¬è§’
+    'C' => 1,    # æ— è§„å·æ›²
     'c' => 1,
     'h' => 2,
     't' => 3,
     'e' => 4,
 );
 
-# ±àÂëµ½¶ş¼¶½á¹¹µÄ·´ÏòÓ³Éä
+# ç¼–ç åˆ°äºŒçº§ç»“æ„çš„åå‘æ˜ å°„
 our %SS_REVERSE = (
     1 => 'C',
     2 => 'H',
@@ -93,7 +96,7 @@ our %SS_REVERSE = (
     4 => 'E',
 );
 
-# °±»ùËáµ¥×ÖÄ¸×ªÈı×ÖÄ¸
+# æ°¨åŸºé…¸å•å­—æ¯è½¬ä¸‰å­—æ¯
 our %AA_NAMES = (
     'A' => 'ALA', 'C' => 'CYS', 'D' => 'ASP', 'E' => 'GLU',
     'F' => 'PHE', 'G' => 'GLY', 'H' => 'HIS', 'I' => 'ILE',
@@ -102,7 +105,7 @@ our %AA_NAMES = (
     'T' => 'THR', 'V' => 'VAL', 'W' => 'TRP', 'Y' => 'TYR',
 );
 
-# °±»ùËáÈ«Ãû
+# æ°¨åŸºé…¸å…¨å
 our %AA_FULL_NAMES = (
     'A' => 'Alanine',     'C' => 'Cysteine',
     'D' => 'Aspartic acid', 'E' => 'Glutamic acid',
@@ -864,8 +867,8 @@ cchain:	while($line=<IN>){
 	$this_score=ssea_score($res_1[0],$res_1[1],$res_2[0],$res_2[1]);
 	print "ssea_score=$this_score";
 }elsif($options=~/ \-nwalignca\s+(\S+)/){
-	$current_dir = `cd`;  # ·µ»Øµ±Ç°Ä¿Â¼
-	chomp($current_dir);  # È¥µô»»ĞĞ·û
+	$current_dir = `cd`;  # è¿”å›å½“å‰ç›®å½•
+	chomp($current_dir);  # å»æ‰æ¢è¡Œç¬¦
     $libdir="$current_dir\\fold";
     $blastdir="$libdir\\windb\\ncbi-blast-2.2.24";
     if($rlinux==1){
@@ -874,9 +877,9 @@ cchain:	while($line=<IN>){
     $pdbdb="$libdir\\windb\\db.seq";
     $fastaseq = $1;
     
-    my $datadir = $fastaseq;   # ¸´ÖÆÔ­Ê¼Öµ
-    $datadir =~ s/[^\\]*$//;   # É¾³ıÎÄ¼şÃû²¿·Ö
-    $datadir =~ s/\\$//;       # É¾³ıÄ©Î²µÄ·´Ğ±¸Ü,È¥µôÄ©Î²µÄ·´Ğ±¸Ü£¨Èç¹ûÓĞ£©
+    my $datadir = $fastaseq;   # å¤åˆ¶åŸå§‹å€¼
+    $datadir =~ s/[^\\]*$//;   # åˆ é™¤æ–‡ä»¶åéƒ¨åˆ†
+    $datadir =~ s/\\$//;       # åˆ é™¤æœ«å°¾çš„åæ–œæ ,å»æ‰æœ«å°¾çš„åæ–œæ ï¼ˆå¦‚æœæœ‰ï¼‰
     $datadir = $datadir . "\\";
     $datadir =~ s/\\/\\\\/g;
     chdir "$datadir";
@@ -949,8 +952,8 @@ cchain:	while($line=<IN>){
 }
 ##################################### webpdb #############################
 elsif($options=~/ \-webpdb\s+(\S+)/){
-    $current_dir = `cd`;  # ·µ»Øµ±Ç°Ä¿Â¼
-	chomp($current_dir);  # È¥µô»»ĞĞ·û
+    $current_dir = `cd`;  # è¿”å›å½“å‰ç›®å½•
+	chomp($current_dir);  # å»æ‰æ¢è¡Œç¬¦
     $libdir="$current_dir\\fold";
     $blastdir="$libdir\\windb\\ncbi-blast-2.2.24";
     if($rlinux==1){
@@ -974,9 +977,9 @@ elsif($options=~/ \-webpdb\s+(\S+)/){
     print "Target=$fastaseq\n";
     # print "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH\n";
    
-    my $datadir = $fastaseq;   # ¸´ÖÆÔ­Ê¼Öµ
-    $datadir =~ s/[^\\]*$//;   # É¾³ıÎÄ¼şÃû²¿·Ö
-    $datadir =~ s/\\$//;       # É¾³ıÄ©Î²µÄ·´Ğ±¸Ü,È¥µôÄ©Î²µÄ·´Ğ±¸Ü£¨Èç¹ûÓĞ£©
+    my $datadir = $fastaseq;   # å¤åˆ¶åŸå§‹å€¼
+    $datadir =~ s/[^\\]*$//;   # åˆ é™¤æ–‡ä»¶åéƒ¨åˆ†
+    $datadir =~ s/\\$//;       # åˆ é™¤æœ«å°¾çš„åæ–œæ ,å»æ‰æœ«å°¾çš„åæ–œæ ï¼ˆå¦‚æœæœ‰ï¼‰
     $datadir = $datadir . "\\";
     $datadir =~ s/\\/\\\\/g;
     chdir "$datadir";
@@ -1010,8 +1013,8 @@ elsif($options=~/ \-webpdb\s+(\S+)/){
 }
 ##################################### psiblast_msa #######################
 elsif($options=~/ \-metass\s+(\S+)/){
-    $current_dir = `cd`;  # ·µ»Øµ±Ç°Ä¿Â¼
-	chomp($current_dir);  # È¥µô»»ĞĞ·û
+    $current_dir = `cd`;  # è¿”å›å½“å‰ç›®å½•
+	chomp($current_dir);  # å»æ‰æ¢è¡Œç¬¦
     $libdir="$current_dir\\fold";
     $blastdir="$libdir\\windb\\ncbi-blast-2.2.24";
     if($rlinux==1){
@@ -1021,9 +1024,9 @@ elsif($options=~/ \-metass\s+(\S+)/){
     
     $fastaseq = $1;
     
-    my $datadir = $fastaseq;   # ¸´ÖÆÔ­Ê¼Öµ
-    $datadir =~ s/[^\\]*$//;   # É¾³ıÎÄ¼şÃû²¿·Ö
-    $datadir =~ s/\\$//;       # É¾³ıÄ©Î²µÄ·´Ğ±¸Ü,È¥µôÄ©Î²µÄ·´Ğ±¸Ü£¨Èç¹ûÓĞ£©
+    my $datadir = $fastaseq;   # å¤åˆ¶åŸå§‹å€¼
+    $datadir =~ s/[^\\]*$//;   # åˆ é™¤æ–‡ä»¶åéƒ¨åˆ†
+    $datadir =~ s/\\$//;       # åˆ é™¤æœ«å°¾çš„åæ–œæ ,å»æ‰æœ«å°¾çš„åæ–œæ ï¼ˆå¦‚æœæœ‰ï¼‰
     $datadir = $datadir . "\\";
     $datadir =~ s/\\/\\\\/g;
     chdir "$datadir";
@@ -1063,8 +1066,8 @@ elsif($options=~/ \-metass\s+(\S+)/){
 
 }   
 elsif($options=~/ \-psiblastmsa\s+(\S+)/){
-    $current_dir = `cd`;  # ·µ»Øµ±Ç°Ä¿Â¼
-	chomp($current_dir);  # È¥µô»»ĞĞ·û
+    $current_dir = `cd`;  # è¿”å›å½“å‰ç›®å½•
+	chomp($current_dir);  # å»æ‰æ¢è¡Œç¬¦
     $libdir="$current_dir\\fold";
     $blastdir="$libdir\\windb\\ncbi-blast-2.2.24";
     if($rlinux==1){
@@ -1074,9 +1077,9 @@ elsif($options=~/ \-psiblastmsa\s+(\S+)/){
     
     $fastaseq = $1;
     
-    my $datadir = $fastaseq;   # ¸´ÖÆÔ­Ê¼Öµ
-    $datadir =~ s/[^\\]*$//;   # É¾³ıÎÄ¼şÃû²¿·Ö
-    $datadir =~ s/\\$//;       # É¾³ıÄ©Î²µÄ·´Ğ±¸Ü,È¥µôÄ©Î²µÄ·´Ğ±¸Ü£¨Èç¹ûÓĞ£©
+    my $datadir = $fastaseq;   # å¤åˆ¶åŸå§‹å€¼
+    $datadir =~ s/[^\\]*$//;   # åˆ é™¤æ–‡ä»¶åéƒ¨åˆ†
+    $datadir =~ s/\\$//;       # åˆ é™¤æœ«å°¾çš„åæ–œæ ,å»æ‰æœ«å°¾çš„åæ–œæ ï¼ˆå¦‚æœæœ‰ï¼‰
     $datadir = $datadir . "\\";
     $datadir =~ s/\\/\\\\/g;
     chdir "$datadir";
@@ -1113,17 +1116,17 @@ elsif($options=~/ \-psiblastmsa\s+(\S+)/){
 
 ##################################### webpdb #############################
 elsif($options=~/ \-psiblastca\s+(\S+)/){
-    $current_dir = `cd`;  # ·µ»Øµ±Ç°Ä¿Â¼
-	chomp($current_dir);  # È¥µô»»ĞĞ·û
+    $current_dir = `cd`;  # è¿”å›å½“å‰ç›®å½•
+	chomp($current_dir);  # å»æ‰æ¢è¡Œç¬¦
     $libdir="$current_dir\\fold";
     $blastdir="$libdir\\windb\\ncbi-blast-2.2.24";    
     $nrdb="$libdir\\windb\\nr\\nr";     
     $fastaseq = $1;
     my $datadir = "";
     if($rlinux!=1){
-        $datadir = $fastaseq;   # ¸´ÖÆÔ­Ê¼Öµ
-        $datadir =~ s/[^\\]*$//;   # É¾³ıÎÄ¼şÃû²¿·Ö
-        $datadir =~ s/\\$//;       # É¾³ıÄ©Î²µÄ·´Ğ±¸Ü,È¥µôÄ©Î²µÄ·´Ğ±¸Ü£¨Èç¹ûÓĞ£©
+        $datadir = $fastaseq;   # å¤åˆ¶åŸå§‹å€¼
+        $datadir =~ s/[^\\]*$//;   # åˆ é™¤æ–‡ä»¶åéƒ¨åˆ†
+        $datadir =~ s/\\$//;       # åˆ é™¤æœ«å°¾çš„åæ–œæ ,å»æ‰æœ«å°¾çš„åæ–œæ ï¼ˆå¦‚æœæœ‰ï¼‰
         $datadir = $datadir . "\\";
         $datadir =~ s/\\/\\\\/g;
         chdir "$datadir";
@@ -1134,9 +1137,9 @@ elsif($options=~/ \-psiblastca\s+(\S+)/){
         $blastdir = "$libdir/windb/linux/ncbi-blast-2.2.24";  ##### add linux directory
         $nrdb = "$libdir/windb/nr/nr";
         $datadir = $fastaseq;
-        $datadir =~ s/[^\/]*$//;   # É¾³ı×îºóÒ»¸ö / Ö®ºóµÄ²¿·Ö£¨ÎÄ¼şÃû£©
-        $datadir =~ s/\/$//;       # É¾³ıÄ©Î²¶àÓàµÄ /£¨Èç¹ûÓĞ£©
-        # ÕâÀïÎŞĞèÔÙÌí¼Ó /£¬chdir ¿ÉÒÔ½ÓÊÜÎŞÄ©Î²Ğ±¸ÜµÄÄ¿Â¼
+        $datadir =~ s/[^\/]*$//;   # åˆ é™¤æœ€åä¸€ä¸ª / ä¹‹åçš„éƒ¨åˆ†ï¼ˆæ–‡ä»¶åï¼‰
+        $datadir =~ s/\/$//;       # åˆ é™¤æœ«å°¾å¤šä½™çš„ /ï¼ˆå¦‚æœæœ‰ï¼‰
+        # è¿™é‡Œæ— éœ€å†æ·»åŠ  /ï¼Œchdir å¯ä»¥æ¥å—æ— æœ«å°¾æ–œæ çš„ç›®å½•
         chdir($datadir);
         print "chdir($datadir)\n";
     } 
@@ -1171,7 +1174,7 @@ elsif($options=~/ \-psiblastca\s+(\S+)/){
     $s=$1;
     print `bin\\wget.exe https://files.rcsb.org/download/$s.pdb --directory-prefix .`;
 	print `bin\\wget.exe http://www.rcsb.org/pdb/files/$s.pdb.gz --directory-prefix .`;
-    # -O »ò --output-document£ºÖ¸¶¨ÏÂÔØÄÚÈİµÄ±£´æÎÄ¼şÃû
+    # -O æˆ– --output-documentï¼šæŒ‡å®šä¸‹è½½å†…å®¹çš„ä¿å­˜æ–‡ä»¶å
     print `bin\\wget.exe https://www.rcsb.org/fasta/entry/$s -O $s.fasta.txt`;
 
 }elsif($options=~/ \-roc\s+(\S+)/){
@@ -1229,8 +1232,8 @@ for($i=0;$i<$arg_count;$i++){
 	if($ARGV[$i] eq "-3d"){
         $d3Test = 1;
 		$fastaseq = $ARGV[$i+1];
-		$current_dir = `cd`;  # ·µ»Øµ±Ç°Ä¿Â¼
-		chomp($current_dir);  # È¥µô»»ĞĞ·û
+		$current_dir = `cd`;  # è¿”å›å½“å‰ç›®å½•
+		chomp($current_dir);  # å»æ‰æ¢è¡Œç¬¦
 		chdir "fold\\foldcenter";
         # print("perl runFold.win7.3.pl $current_dir\\fold -3d $fastaseq");
 		# system("perl runFold.win7.3.pl $current_dir\\fold -3d $fastaseq");
@@ -1392,7 +1395,7 @@ sub extractPDB{
    my $num = $_[2];
    
    my $mchain = 0;
-   $mchain = $_[3] if @_ > 3;  # Ö»ÓĞ´«ÈëµÚ4¸ö²ÎÊıÊ±²Å¸³Öµ   
+   $mchain = $_[3] if @_ > 3;  # åªæœ‰ä¼ å…¥ç¬¬4ä¸ªå‚æ•°æ—¶æ‰èµ‹å€¼   
    
    my $x,$y,$z;
    open(IN,"$pdb")||print "can not open $pdb\n";
@@ -1428,13 +1431,13 @@ AA:   while (my $line = <IN>) {
 	        $y =~ s/\s+//g;
 	        $z =~ s/\s+//g;        
         }
-        # Ó¦ÓÃ¹ıÂËÌõ¼ş
+        # åº”ç”¨è¿‡æ»¤æ¡ä»¶
         #next if $options{residue} && $res_name ne $options{residue};
         #next if $options{chain} && $chain_id ne $options{chain};
         #next if $options{resnum} && $res_seq ne $options{resnum};
         #next if $options{atom} && $atom_name ne $options{atom};
         
-        # ±£´æÆ¥ÅäµÄÔ­×Ó
+        # ä¿å­˜åŒ¹é…çš„åŸå­
         #push @atoms, {
         #    serial    => $serial,
         #    atom_name => $atom_name,
@@ -1845,7 +1848,7 @@ sub needleman_wunsch {
     if (@_ == 9) {
         $align_show = $_[8];
     }    
-    # ³õÊ¼»¯BLOSUM62¾ØÕó
+    # åˆå§‹åŒ–BLOSUM62çŸ©é˜µ
     my @blos62;
     for (my $i = 0; $i <= 23; $i++) {
         for (my $j = 0; $j <= 23; $j++) {
@@ -1860,7 +1863,7 @@ sub needleman_wunsch {
     my $len2 = length($seq2);    
     my @seq1;
     my @seq2;    
-    # ³õÊ¼»¯ĞòÁĞÊı×é
+    # åˆå§‹åŒ–åºåˆ—æ•°ç»„
     for (my $i = 0; $i < $len1; $i++) {
         $seq1[$i] = 0;
     }
@@ -1868,7 +1871,7 @@ sub needleman_wunsch {
         $seq2[$j] = 0;
     }
     
-    # ½«ĞòÁĞ×ª»»Îª°±»ùËáĞòºÅ
+    # å°†åºåˆ—è½¬æ¢ä¸ºæ°¨åŸºé…¸åºå·
     for (my $i = 1; $i < $len1; $i++) {
         my $char1 = substr($seq1, $i, 1);
         for (my $j = 1; $j < length($seqW); $j++) {
@@ -1889,7 +1892,7 @@ sub needleman_wunsch {
         }
     }
     
-    # ¼ÆËãµÃ·Ö¾ØÕó
+    # è®¡ç®—å¾—åˆ†çŸ©é˜µ
     my @score;
     for (my $i = 1; $i < $len1; $i++) {
         for (my $j = 1; $j < $len2; $j++) {
@@ -1907,7 +1910,7 @@ sub needleman_wunsch {
     for (my $j = 0; $j <= $len2; $j++) {
         $jaligni[$j] = -1;
     }    
-    # ³õÊ¼»¯Êı×é
+    # åˆå§‹åŒ–æ•°ç»„
     for (my $i = 0; $i <= $len1; $i++) {
         for (my $j = 0; $j <= $len2; $j++) {
             $val[$i][$j] = 0;
@@ -1919,7 +1922,7 @@ sub needleman_wunsch {
         }
     }
     
-    # Needleman-Wunsch¶¯Ì¬¹æ»®Ëã·¨
+    # Needleman-WunschåŠ¨æ€è§„åˆ’ç®—æ³•
     $val[0][0] = 0;    
     for (my $i = 1; $i < $len1; $i++) {
         $val[$i][0] = $gap_extn * $i;
@@ -1993,7 +1996,7 @@ sub needleman_wunsch {
     # Trace back
     my $i = $len1 - 1,$j = $len2 - 1;    
     while (($i > 0) && ($j > 0)) {
-        if ($directoryI[$i][$j] == 1) {  # ´Ó¶Ô½ÇÏß
+        if ($directoryI[$i][$j] == 1) {  # ä»å¯¹è§’çº¿
             $jaligni[$j] = $i;
             $i--;
             $j--;
@@ -2046,21 +2049,21 @@ sub needleman_wunsch {
         if (($i >= $len1) && ($j >= $len2)) {
             last;
         }        
-        if (($i >= $len1) && ($j < $len2)) {  # ĞòÁĞ1Î´±È¶Ô
+        if (($i >= $len1) && ($j < $len2)) {  # åºåˆ—1æœªæ¯”å¯¹
             $k++;
             $sequenceA[$k] = '-';
             $sequenceB[$k] = substr($seqW, $seq2[$j], 1);
             $sequenceM[$k] = ' ';
             $j++;
         }
-        elsif (($i < $len1) && ($j >= $len2)) {  # ĞòÁĞ2Î´±È¶Ô
+        elsif (($i < $len1) && ($j >= $len2)) {  # åºåˆ—2æœªæ¯”å¯¹
             $k++;
             $sequenceA[$k] = substr($seqW, $seq1[$i], 1);
             $sequenceB[$k] = '-';
             $sequenceM[$k] = ' ';
             $i++;
         }
-        elsif ($i == $jaligni[$j]) {  # Èç¹û±È¶ÔÉÏ
+        elsif ($i == $jaligni[$j]) {  # å¦‚æœæ¯”å¯¹ä¸Š
             $k++;
             $sequenceA[$k] = substr($seqW, $seq1[$i], 1);
             $sequenceB[$k] = substr($seqW, $seq2[$j], 1);
@@ -2124,7 +2127,7 @@ sub needleman_wunsch {
 
 sub smith_waterman {
     my ($seq1, $seq2,$tNAME_WIDTH,$tPOSITION_WIDTH,$tSEQUENCE_WIDTH,$tBLANK,$gap_open,$gap_extn) = @_;   
-    # ³õÊ¼»¯BLOSUM62¾ØÕó
+    # åˆå§‹åŒ–BLOSUM62çŸ©é˜µ
     my @blos62;
     for (my $i = 0; $i <= 23; $i++) {
         for (my $j = 0; $j <= 23; $j++) {
@@ -2142,7 +2145,7 @@ sub smith_waterman {
     
     my @seq1;
     my @seq2;    
-    # ³õÊ¼»¯ĞòÁĞÊı×é
+    # åˆå§‹åŒ–åºåˆ—æ•°ç»„
     for (my $i = 0; $i < $len1; $i++) {
         $seq1[$i] = 0;
     }
@@ -2150,7 +2153,7 @@ sub smith_waterman {
         $seq2[$j] = 0;
     }
     
-    # ½«ĞòÁĞ×ª»»Îª°±»ùËáĞòºÅ
+    # å°†åºåˆ—è½¬æ¢ä¸ºæ°¨åŸºé…¸åºå·
     for (my $i = 1; $i < $len1; $i++) {
         my $char1 = substr($seq1, $i, 1);
         for (my $j = 1; $j < length($seqW); $j++) {
@@ -2171,7 +2174,7 @@ sub smith_waterman {
         }
     }
     
-    # ¼ÆËãµÃ·Ö¾ØÕó
+    # è®¡ç®—å¾—åˆ†çŸ©é˜µ
     my @score;
     for (my $i = 1; $i < $len1; $i++) {
         for (my $j = 1; $j < $len2; $j++) {
@@ -2190,7 +2193,7 @@ sub smith_waterman {
         $jaligni[$j] = -1;
     }
     
-    # ³õÊ¼»¯Êı×é
+    # åˆå§‹åŒ–æ•°ç»„
     for (my $i = 0; $i <= $len1; $i++) {
         for (my $j = 0; $j <= $len2; $j++) {
             $val[$i][$j] = 0;
@@ -2202,7 +2205,7 @@ sub smith_waterman {
         }
     }
     
-    # Smith-Waterman¶¯Ì¬¹æ»®Ëã·¨
+    # Smith-WatermanåŠ¨æ€è§„åˆ’ç®—æ³•
     $val[0][0] = 0;
     
     for (my $i = 1; $i < $len1; $i++) {
@@ -2225,7 +2228,7 @@ sub smith_waterman {
     my $max_j = -1;
     my $max_value = -1;
     
-    # ¶¯Ì¬¹æ»®
+    # åŠ¨æ€è§„åˆ’
     for (my $j = 1; $j < $len2; $j++) {
         for (my $i = 1; $i < $len1; $i++) {
             my $D = $val[$i-1][$j-1] + $score[$i][$j];
@@ -2274,7 +2277,7 @@ sub smith_waterman {
                 $directoryI[$i][$j] = 3;
                 $val[$i][$j] = $V;
             }         
-            # ¼ÇÂ¼×î´óÖµ
+            # è®°å½•æœ€å¤§å€¼
             if ($val[$i][$j] > $max_value) {
                 $max_value = $val[$i][$j];
                 $max_i = $i;
@@ -2283,7 +2286,7 @@ sub smith_waterman {
         }
     }
     
-    # »ØËİÂ·¾¶
+    # å›æº¯è·¯å¾„
     my $i = $max_i;
     my $j = $max_j;    
     while (($i > 0) && ($j > 0)) {
@@ -2291,12 +2294,12 @@ sub smith_waterman {
             last;
         }
         
-        if ($directoryI[$i][$j] == 1) {  # ´Ó¶Ô½ÇÏß
+        if ($directoryI[$i][$j] == 1) {  # ä»å¯¹è§’çº¿
             $jaligni[$j] = $i;
             $i--;
             $j--;
         }
-        elsif ($directoryI[$i][$j] == 2) {  # ´ÓË®Æ½
+        elsif ($directoryI[$i][$j] == 2) {  # ä»æ°´å¹³
             my $temp1 = $justpHic[$i][$j];
             for (my $me = 1; $me <= $temp1; $me++) {
                 if ($i > 0) {
@@ -2304,7 +2307,7 @@ sub smith_waterman {
                 }
             }
         }
-        else {  # ´Ó´¹Ö±
+        else {  # ä»å‚ç›´
             my $temp2 = $justpVic[$i][$j];
             for (my $me = 1; $me <= $temp2; $me++) {
                 if ($j > 0) {
@@ -2314,7 +2317,7 @@ sub smith_waterman {
         }
     }
     
-    # ¼ÆËãĞòÁĞÍ¬Ò»ĞÔ
+    # è®¡ç®—åºåˆ—åŒä¸€æ€§
     my $alignmentid = 0;
     my $L_ali = 0;
     for (my $j = 0; $j < $len2; $j++) {
@@ -2340,7 +2343,7 @@ sub smith_waterman {
     printf "Local sequence alignment identity=%.3f", $identity;
     print " " . $alignmentid . "/" . $L_ali . "\n\n";
     
-    # Êä³ö±È¶ÔĞòÁĞ
+    # è¾“å‡ºæ¯”å¯¹åºåˆ—
     my $sequenceA = "";
     my $sequenceB = "";
     my $sequenceM = "";    
@@ -2351,22 +2354,22 @@ sub smith_waterman {
             last;
         }
         
-        if (($i >= $len1) && ($j < $len2)) {  # ĞòÁĞ1Î´±È¶Ô
+        if (($i >= $len1) && ($j < $len2)) {  # åºåˆ—1æœªæ¯”å¯¹
             $sequenceA = "-" . $sequenceA;
             $sequenceB = substr($seqW, $seq2[$j], 1) . $sequenceB;
             $sequenceM = " " . $sequenceM;
             $j--;
         }
-        elsif (($i < $len1) && ($j >= $len2)) {  # ĞòÁĞ2Î´±È¶Ô
+        elsif (($i < $len1) && ($j >= $len2)) {  # åºåˆ—2æœªæ¯”å¯¹
             $sequenceA = substr($seqW, $seq1[$i], 1) . $sequenceA;
             $sequenceB = "-" . $sequenceB;
             $sequenceM = " " . $sequenceM;
             $i--;
         }
-        elsif ($i == $jaligni[$j]) {  # Èç¹û±È¶Ô
+        elsif ($i == $jaligni[$j]) {  # å¦‚æœæ¯”å¯¹
             $sequenceA = substr($seqW, $seq1[$i], 1) . $sequenceA;
             $sequenceB = substr($seqW, $seq2[$j], 1) . $sequenceB;
-            if ($seq1[$i] == $seq2[$j]) {  # ÏàÍ¬
+            if ($seq1[$i] == $seq2[$j]) {  # ç›¸åŒ
                 $sequenceM = "|" . $sequenceM;
             }
             else {
@@ -2375,13 +2378,13 @@ sub smith_waterman {
             $i--;
             $j--;
         }
-        elsif ($jaligni[$j] < 0) {  # ĞòÁĞ1ÓĞgap
+        elsif ($jaligni[$j] < 0) {  # åºåˆ—1æœ‰gap
             $sequenceA = "-" . $sequenceA;
             $sequenceB = substr($seqW, $seq2[$j], 1) . $sequenceB;
             $sequenceM = " " . $sequenceM;
             $j--;
         }
-        elsif ($jaligni[$j] >= 0) {  # ĞòÁĞ2ÓĞgap
+        elsif ($jaligni[$j] >= 0) {  # åºåˆ—2æœ‰gap
             $sequenceA = substr($seqW, $seq1[$i], 1) . $sequenceA;
             $sequenceB = "-" . $sequenceB;
             $sequenceM = " " . $sequenceM;
@@ -2470,11 +2473,11 @@ sub read_fasta_or_raw_sequence {
         return $file;
     }
     
-    open(my $fh, '<', $file) or die "ÎŞ·¨´ò¿ªÎÄ¼ş: $file";
+    open(my $fh, '<', $file) or die "æ— æ³•æ‰“å¼€æ–‡ä»¶: $file";
     while (my $line = <$fh>) {
         chomp $line;
         if ($line =~ /^>/) {
-            # Ìø¹ıfastaÍ·ĞĞ
+            # è·³è¿‡fastaå¤´è¡Œ
         }
         else {
             $line =~ s/\s//g;
@@ -2489,7 +2492,7 @@ sub read_fasta_or_raw_sequence {
 sub read_pdb {
     my ($file) = @_;
     my $seq = "";    
-    open(my $fh, '<', $file) or die "ÎŞ·¨´ò¿ªÎÄ¼ş: $file";
+    open(my $fh, '<', $file) or die "æ— æ³•æ‰“å¼€æ–‡ä»¶: $file";
     while (my $line = <$fh>) {
         chomp $line;
         if ($line =~ /^TER/) {
@@ -2527,7 +2530,7 @@ sub name_map {
 ######################################### split chains ###################################################################
 sub parse_pdb_and_split_chains {
     my ($pdb_file) = @_;
-    open my $fh, '<', $pdb_file or die "ÎŞ·¨´ò¿ªÎÄ¼ş: $pdb_file";
+    open my $fh, '<', $pdb_file or die "æ— æ³•æ‰“å¼€æ–‡ä»¶: $pdb_file";
 
     my ($n_ch, $res_old, $ch_old) = (0, "zzz", "ABC");
     my (%Lch, %n_atom, %ter, %CH, %ATOM_LINES, %HAS_CA);
@@ -2536,18 +2539,18 @@ sub parse_pdb_and_split_chains {
     while (my $line = <$fh>) {
         my $record = substr($line, 0, 6);
 
-        # ¼ì²éÊÇ·ñÎª¹ıÊ±½á¹¹»òÀíÂÛÄ£ĞÍ
+        # æ£€æŸ¥æ˜¯å¦ä¸ºè¿‡æ—¶ç»“æ„æˆ–ç†è®ºæ¨¡å‹
         $obslte = -1 if $record eq "OBSLTE";
         $theoretical = -1 if $record eq "EXPDTA" && $line =~ /THEORETIC/;
 
-        # ´¦ÀíTER»òENDMDL¼ÇÂ¼
+        # å¤„ç†TERæˆ–ENDMDLè®°å½•
         if ($record =~ /^TER/ || $record eq "ENDMDL") {
             for my $i (1 .. $n_ch) {
                 $ter{$CH{$i}} = "yes" if $Lch{$i} > 2;
             }
         }
 
-        # ´¦ÀíATOM¼ÇÂ¼
+        # å¤„ç†ATOMè®°å½•
         if ($record eq "ATOM  " || $record eq "HETATM") {
             process_atom_line(
                 $line, \%ter, \%Lch, \%n_atom, \%CH, \%ATOM_LINES, \%HAS_CA,
@@ -2557,18 +2560,18 @@ sub parse_pdb_and_split_chains {
     }
     close $fh;
 
-    # Êä³ö´¦ÀíºóµÄÁ´½á¹¹
+    # è¾“å‡ºå¤„ç†åçš„é“¾ç»“æ„
     output_chains($pdb_file, $n_ch, \%Lch, \%CH, \%ATOM_LINES, \%HAS_CA, \%n_atom, $obslte, $theoretical);
 }
 
-# ´¦ÀíATOMĞĞ
+# å¤„ç†ATOMè¡Œ
 sub process_atom_line {
     my ($line, $ter_ref, $Lch_ref, $n_atom_ref, $CH_ref, $ATOM_LINES_ref, $HAS_CA_ref,
         $n_ch_ref, $res_old_ref, $ch_old_ref) = @_;
 
     my $ch = substr($line, 21, 1);
     
-    # ¼ì²éÁ´ÊÇ·ñÒÑÖÕÖ¹
+    # æ£€æŸ¥é“¾æ˜¯å¦å·²ç»ˆæ­¢
     return if defined $$ter_ref{$ch} && $$ter_ref{$ch} eq "yes";
 
     my $atom = substr($line, 12, 4);
@@ -2577,58 +2580,58 @@ sub process_atom_line {
     my $atomH = $atom0;
     $atomH =~ s/\d//mg;
     my $H = substr($atomH, 0, 1);
-    return if defined $H && $H eq "H";  # Ìø¹ıÇâÔ­×Ó
+    return if defined $H && $H eq "H";  # è·³è¿‡æ°¢åŸå­
 
     my $seq = substr($line, 17, 3);
-    return if $seq =~ /\s+/;  # Ìø¹ıDNA
+    return if $seq =~ /\s+/;  # è·³è¿‡DNA
 
-    # ½«Î´Öª²Ğ»ù×ªÎªGLY
+    # å°†æœªçŸ¥æ®‹åŸºè½¬ä¸ºGLY
     $seq = 'GLY' unless is_standard_aa($seq);
 
     my $alt = substr($line, 16, 1);
     if ($alt eq " " || $alt eq "A" || $alt eq "1") {
         my $res = substr($line, 22, 5);
 
-        # ĞÂÁ´´¦Àí
+        # æ–°é“¾å¤„ç†
         if ($ch ne $$ch_old_ref) {
             $$n_ch_ref++;
             $$CH_ref{$$n_ch_ref} = $ch;
             $$ch_old_ref = $ch;
         }
 
-        # ĞÂ²Ğ»ù´¦Àí
+        # æ–°æ®‹åŸºå¤„ç†
         if (!defined $$res_old_ref || $$res_old_ref ne $res) {
             $$Lch_ref{$$n_ch_ref}++;
             $$res_old_ref = $res;
         }
 
-        # ±£´æÍêÕûµÄATOMĞĞ
+        # ä¿å­˜å®Œæ•´çš„ATOMè¡Œ
         my $n = ++$$n_atom_ref{$$n_ch_ref, $$Lch_ref{$$n_ch_ref}};
         $$ATOM_LINES_ref{$$n_ch_ref, $$Lch_ref{$$n_ch_ref}, $n} = $line;
         
-        # ¼ì²éÊÇ·ñ°üº¬CAÔ­×Ó
+        # æ£€æŸ¥æ˜¯å¦åŒ…å«CAåŸå­
         if ($atom =~ /CA/) {
             $$HAS_CA_ref{$$n_ch_ref, $$Lch_ref{$$n_ch_ref}} = 1;
         }
     }
 }
 
-# ÅĞ¶ÏÊÇ·ñÎª±ê×¼°±»ùËá
+# åˆ¤æ–­æ˜¯å¦ä¸ºæ ‡å‡†æ°¨åŸºé…¸
 sub is_standard_aa {
     my ($res) = @_;
     return grep { $_ eq $res } @standard_amino_acids;
 }
 
-# Éú³ÉÊä³öÎÄ¼şÃû
+# ç”Ÿæˆè¾“å‡ºæ–‡ä»¶å
 sub generate_output_filename {
     my ($input_file, $chain_id) = @_;
     
-    # ÌáÈ¡»ù´¡ÎÄ¼şÃû£¨²»º¬Â·¾¶ºÍÀ©Õ¹Ãû£©
+    # æå–åŸºç¡€æ–‡ä»¶åï¼ˆä¸å«è·¯å¾„å’Œæ‰©å±•åï¼‰
     my $base_name = $input_file;
-    $base_name =~ s/\.pdb$//i;      # ÒÆ³ı.pdbÀ©Õ¹Ãû
-    $base_name =~ s/.*[\/\\]//;     # ÒÆ³ıÂ·¾¶
+    $base_name =~ s/\.pdb$//i;      # ç§»é™¤.pdbæ‰©å±•å
+    $base_name =~ s/.*[\/\\]//;     # ç§»é™¤è·¯å¾„
     
-    # ´¦ÀíÁ´ID£º¿Õ¸ñÁ´ÓÃÏÂ»®Ïß£¬ÆäËûÁ´Ö±½Ó¸½¼Ó
+    # å¤„ç†é“¾IDï¼šç©ºæ ¼é“¾ç”¨ä¸‹åˆ’çº¿ï¼Œå…¶ä»–é“¾ç›´æ¥é™„åŠ 
     if ($chain_id eq " ") {
         return "${base_name}_.pdb";
     } else {
@@ -2636,40 +2639,40 @@ sub generate_output_filename {
     }
 }
 
-# Êä³ö¸÷Á´Îª¶ÀÁ¢PDBÎÄ¼ş
+# è¾“å‡ºå„é“¾ä¸ºç‹¬ç«‹PDBæ–‡ä»¶
 sub output_chains {
     my ($pdb_file, $n_ch, $Lch_ref, $CH_ref, $ATOM_LINES_ref, $HAS_CA_ref, $n_atom_ref, $obslte, $theoretical) = @_;
     return unless $n_ch > 0;
-    print "ÊäÈëÎÄ¼ş: $pdb_file\n";
-    print "¼ì²âµ½ $n_ch ÌõÁ´:\n";
+    print "è¾“å…¥æ–‡ä»¶: $pdb_file\n";
+    print "æ£€æµ‹åˆ° $n_ch æ¡é“¾:\n";
     
     for my $i (1 .. $n_ch) {
         my $chain_id = defined $$CH_ref{$i} ? $$CH_ref{$i} : " ";
         my $res_count = $$Lch_ref{$i};
         
-        printf "  Á´ %d: ID='%s', ²Ğ»ùÊı=%d\n", $i, $chain_id, $res_count;
+        printf "  é“¾ %d: ID='%s', æ®‹åŸºæ•°=%d\n", $i, $chain_id, $res_count;
     }
     print "\n";
 
     for my $i (1 .. $n_ch) {
-        next unless $$Lch_ref{$i} >= 30;  # Ö»´¦Àí³¤¶È¡İ30µÄÁ´
+        next unless $$Lch_ref{$i} >= 30;  # åªå¤„ç†é•¿åº¦â‰¥30çš„é“¾
 
         my $chain_id = defined $$CH_ref{$i} ? $$CH_ref{$i} : " ";
         my $out_file = generate_output_filename($pdb_file, $chain_id);
 
-        open my $out_fh, '>', $out_file or die "ÎŞ·¨Ğ´Èë: $out_file";
+        open my $out_fh, '>', $out_file or die "æ— æ³•å†™å…¥: $out_file";
 
         my ($atom_count, $res_count) = (0, 0);
         
-        # Êä³öHEADER¼ÇÂ¼
+        # è¾“å‡ºHEADERè®°å½•
         # print $out_fh "HEADER    EXTRACTED CHAIN $chain_id FROM $pdb_file\n";
         # print $out_fh "REMARK    Generated by ProteinKits\n";
         # print $out_fh "REMARK    Original chain ID: '$chain_id'\n";
         # print $out_fh "REMARK    Residues: $$Lch_ref{$i}\n";
         
-        # °´²Ğ»ùË³ĞòÊä³öËùÓĞÔ­×Ó
+        # æŒ‰æ®‹åŸºé¡ºåºè¾“å‡ºæ‰€æœ‰åŸå­
         for my $j (1 .. $$Lch_ref{$i}) {
-            # Ö»´¦Àí°üº¬CAÔ­×ÓµÄ²Ğ»ù
+            # åªå¤„ç†åŒ…å«CAåŸå­çš„æ®‹åŸº
             next unless $$HAS_CA_ref{$i, $j};
             
             my $atom_count_per_res = $$n_atom_ref{$i, $j} || 0;
@@ -2677,23 +2680,23 @@ sub output_chains {
             
             $res_count++;
             
-            # Êä³ö¸Ã²Ğ»ùµÄËùÓĞÔ­×Ó
+            # è¾“å‡ºè¯¥æ®‹åŸºçš„æ‰€æœ‰åŸå­
             for my $k (1 .. $atom_count_per_res) {
                 if (defined $$ATOM_LINES_ref{$i, $j, $k}) {
                     $atom_count++;
                     my $original_line = $$ATOM_LINES_ref{$i, $j, $k};
                     
-                    # ±£³ÖÔ­Ê¼ĞĞµÄÍêÕû¸ñÊ½£¬Ö»¸üĞÂÔ­×ÓĞòºÅºÍ²Ğ»ùĞòºÅ
-                    my $new_line = substr($original_line, 0, 6);  # ¼ÇÂ¼Ãû (6×Ö·û)
-                    $new_line .= sprintf("%5d", $atom_count);     # Ô­×ÓĞòºÅ (5×Ö·û)
-                    $new_line .= substr($original_line, 11, 1);   # ¿Õ¸ñ (1×Ö·û)
-                    $new_line .= substr($original_line, 12, 4);   # Ô­×ÓÃû (4×Ö·û)
-                    $new_line .= substr($original_line, 16, 1);   # ½»ÌæÎ»µã (1×Ö·û)
-                    $new_line .= substr($original_line, 17, 3);   # ²Ğ»ùÃû (3×Ö·û)
-                    $new_line .= substr($original_line, 20, 1);   # ¿Õ¸ñ (1×Ö·û)
-                    $new_line .= substr($original_line, 21, 1);   # Á´ID (1×Ö·û)
-                    $new_line .= sprintf("%4d", $res_count);      # ²Ğ»ùĞòºÅ (4×Ö·û)
-                    $new_line .= substr($original_line, 26, 55);  # Ê£ÓàËùÓĞĞÅÏ¢
+                    # ä¿æŒåŸå§‹è¡Œçš„å®Œæ•´æ ¼å¼ï¼Œåªæ›´æ–°åŸå­åºå·å’Œæ®‹åŸºåºå·
+                    my $new_line = substr($original_line, 0, 6);  # è®°å½•å (6å­—ç¬¦)
+                    $new_line .= sprintf("%5d", $atom_count);     # åŸå­åºå· (5å­—ç¬¦)
+                    $new_line .= substr($original_line, 11, 1);   # ç©ºæ ¼ (1å­—ç¬¦)
+                    $new_line .= substr($original_line, 12, 4);   # åŸå­å (4å­—ç¬¦)
+                    $new_line .= substr($original_line, 16, 1);   # äº¤æ›¿ä½ç‚¹ (1å­—ç¬¦)
+                    $new_line .= substr($original_line, 17, 3);   # æ®‹åŸºå (3å­—ç¬¦)
+                    $new_line .= substr($original_line, 20, 1);   # ç©ºæ ¼ (1å­—ç¬¦)
+                    $new_line .= substr($original_line, 21, 1);   # é“¾ID (1å­—ç¬¦)
+                    $new_line .= sprintf("%4d", $res_count);      # æ®‹åŸºåºå· (4å­—ç¬¦)
+                    $new_line .= substr($original_line, 26, 55);  # å‰©ä½™æ‰€æœ‰ä¿¡æ¯
                     
                     print $out_fh $new_line;
                 }
@@ -2703,15 +2706,15 @@ sub output_chains {
         print $out_fh "TER\n";
         print $out_fh "END\n";
         close $out_fh;
-        print "ÒÑÉú³ÉÎÄ¼ş: $out_file (°üº¬ $atom_count ¸öÔ­×Ó, $res_count ¸ö²Ğ»ù)\n";
+        print "å·²ç”Ÿæˆæ–‡ä»¶: $out_file (åŒ…å« $atom_count ä¸ªåŸå­, $res_count ä¸ªæ®‹åŸº)\n";
     }
     
-    # Í³¼ÆĞÅÏ¢
+    # ç»Ÿè®¡ä¿¡æ¯
     my $processed_chains = 0;
     for my $i (1 .. $n_ch) {
         $processed_chains++ if $$Lch_ref{$i} >= 30;
     }
-    print "\n´¦ÀíÍê³É: ¹²´¦Àí $processed_chains Ìõ·ûºÏÌõ¼şµÄÁ´\n";
+    print "\nå¤„ç†å®Œæˆ: å…±å¤„ç† $processed_chains æ¡ç¬¦åˆæ¡ä»¶çš„é“¾\n";
 }
 ######################################### split chains ###################################################################
 
@@ -3660,7 +3663,7 @@ sub PSSM_CKSAAP{
         my $len_seq=@lenArray;
         my @PSSM=();
 
-        ######## °Ñ¾ØÕóÎÄ¼ş¶ÁÈë@PSSM
+        ######## æŠŠçŸ©é˜µæ–‡ä»¶è¯»å…¥@PSSM
         open FILE_frag,"$name" or die "cannot open the file!$!\n";
         my $line1=<FILE_frag>;
         while($line1=<FILE_frag>){
@@ -3672,7 +3675,7 @@ sub PSSM_CKSAAP{
         close FILE_frag or die "cannot close the file!$!\n";
         my $m=1;
         for(my $i=0;$i<@array_zuhe;$i++){
-            ######## ³õÊ¼»¯°±»ùËá¶ÔÊı×é
+            ######## åˆå§‹åŒ–æ°¨åŸºé…¸å¯¹æ•°ç»„
             my %aminoPairs=();
             for(my $j=0;$j<@aminoArray;$j++){
 				for(my $k=0;$k<@aminoArray;$k++){
@@ -3729,8 +3732,8 @@ sub mcc{
 sub cif2pdb{
 	$cif_file = $_[0]; 
 	$pdb_out = $_[1];
-	open my $cif, '<', $cif_file or die "ÎŞ·¨´ò¿ªCIF: $!";
-	open my $pdb, '>', $pdb_out or die "ÎŞ·¨Ğ´ÈëPDB: $!";
+	open my $cif, '<', $cif_file or die "æ— æ³•æ‰“å¼€CIF: $!";
+	open my $pdb, '>', $pdb_out or die "æ— æ³•å†™å…¥PDB: $!";
 
 	my %pos;
 	my $in_atom = 0;
@@ -3738,7 +3741,7 @@ sub cif2pdb{
 
 	while (<$cif>) {
 		chomp;
-		# ¶ÁÈ¡×Ö¶Î¶¨Òå
+		# è¯»å–å­—æ®µå®šä¹‰
 		if (/^_atom_site\./) {
 			$in_atom = 1;
 			if (/^_atom_site\.(\S+)/) {
@@ -3748,13 +3751,13 @@ sub cif2pdb{
 			next;
 		}
 
-		# ÍË³öÔ­×ÓÇø¿é
+		# é€€å‡ºåŸå­åŒºå—
 		if ($in_atom && (/^#/ || /^\s*$/)) {
 			$in_atom = 0;
 			next;
 		}
 
-		# ½âÎöÔ­×ÓĞĞ
+		# è§£æåŸå­è¡Œ
 		if ($in_atom && %pos && !/^_atom_site/) {
 			my @data = split /\s+/;
 			my $atom = $data[$pos{label_atom_id}];
@@ -3768,12 +3771,12 @@ sub cif2pdb{
 			my $b    = $data[$pos{B_iso_or_equiv}];
 			my $elem = $data[$pos{type_symbol}];
 
-			# ===================== ĞŞ¸´¾¯¸æ£º°Ñ . ×ªÎª 0 =====================
+			# ===================== ä¿®å¤è­¦å‘Šï¼šæŠŠ . è½¬ä¸º 0 =====================
 			$seq = 0 if $seq eq '.';
 			$occ = 0 if $occ eq '.';
 			$b   = 0 if $b   eq '.';
 
-			# Êä³ö±ê×¼ PDB
+			# è¾“å‡ºæ ‡å‡† PDB
 			printf $pdb "ATOM  %5d %-4s %3s %1s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f          %2s\n",
 				$atom_serial++, $atom, $res, $chain, $seq,
 				$x, $y, $z, $occ, $b, $elem;
@@ -3788,33 +3791,33 @@ sub cif2pdb{
 
 sub cacenter{
 	my $pdb_file = $_[0];
-	open my $fh, "<", $pdb_file or die "ÎŞ·¨´ò¿ªÎÄ¼ş: $!";
-	# ´æ´¢ËùÓĞ CA ×ø±êµÄÊı×é
-	# Ã¿¸öÔªËØÊÇ£º[x, y, z]
+	open my $fh, "<", $pdb_file or die "æ— æ³•æ‰“å¼€æ–‡ä»¶: $!";
+	# å­˜å‚¨æ‰€æœ‰ CA åæ ‡çš„æ•°ç»„
+	# æ¯ä¸ªå…ƒç´ æ˜¯ï¼š[x, y, z]
 	my @a;
 	my @xlist = ();
 	my @ylist = ();
 	my @zlist = ();
-	# ÖğĞĞ¶ÁÈ¡ PDB
+	# é€è¡Œè¯»å– PDB
 	while (<$fh>) {
 		chomp;
-		next unless /^ATOM/;  # Ö»´¦Àí ATOM ĞĞ
+		next unless /^ATOM/;  # åªå¤„ç† ATOM è¡Œ
 
-		# ÌáÈ¡ Ô­×ÓÃû (PDB ¸ñÊ½µÚ 13-16 ÁĞ)
+		# æå– åŸå­å (PDB æ ¼å¼ç¬¬ 13-16 åˆ—)
 		my $atom_name = substr($_, 12, 4);
-		$atom_name =~ s/\s+//g;  # È¥µô¿Õ¸ñ
+		$atom_name =~ s/\s+//g;  # å»æ‰ç©ºæ ¼
 
-		# Ö»±£Áô CA Ô­×Ó
+		# åªä¿ç•™ CA åŸå­
 		if ($atom_name eq 'CA') {
-			# ÌáÈ¡×ø±ê x, y, z (µÚ 31-38, 39-46, 47-54 ÁĞ)
+			# æå–åæ ‡ x, y, z (ç¬¬ 31-38, 39-46, 47-54 åˆ—)
 			my $x = substr($_, 30, 8);
 			my $y = substr($_, 38, 8);
 			my $z = substr($_, 46, 8);
 			
-			# ÇåÀí¿Õ¸ñ²¢×ªÊı×Ö
+			# æ¸…ç†ç©ºæ ¼å¹¶è½¬æ•°å­—
 			$x += 0; $y += 0; $z += 0;
 
-			# ´æÈëÊı×é a
+			# å­˜å…¥æ•°ç»„ a
 			push @a, [$x, $y, $z];
 			push(@xlist,$x);
 			push(@ylist,$y);
@@ -3839,11 +3842,11 @@ sub cacenter{
 	return $center;	
 }
 
-# Ê¹ÓÃÊ¾Àı
-# ¶¨ÒåÁ½¸öÊı×éÒıÓÃ
+# ä½¿ç”¨ç¤ºä¾‹
+# å®šä¹‰ä¸¤ä¸ªæ•°ç»„å¼•ç”¨
 # my @array1 = (1.0, 2.0, 3.0, 4.0, 5.0);
 # my @array2 = (2.0, 4.0, 6.0, 8.0, 10.0);
-# µ÷ÓÃº¯Êı
+# è°ƒç”¨å‡½æ•°
 # my $correlation = PearsonCorrelationCoefficient(\@array1, \@array2);
 # print "Pearson correlation coefficient: $correlation\n";
 sub PearsonCorrelationCoefficient {
@@ -3960,7 +3963,7 @@ sub webpdb_camodel{
 		$s=$this_name;
 		print `$libdir\\bin\\wget.exe https://files.rcsb.org/download/$s.pdb --directory-prefix .`;
 		print `$libdir\\bin\\wget.exe http://www.rcsb.org/pdb/files/$s.pdb.gz --directory-prefix .`;
-		# -O »ò --output-document£ºÖ¸¶¨ÏÂÔØÄÚÈİµÄ±£´æÎÄ¼şÃû
+		# -O æˆ– --output-documentï¼šæŒ‡å®šä¸‹è½½å†…å®¹çš„ä¿å­˜æ–‡ä»¶å
 		print `$libdir\\bin\\wget.exe https://www.rcsb.org/fasta/entry/$s -O $s.fasta.txt`;
 		$pdb="$s.pdb";
 		parse_pdb_and_split_chains($pdb);		
@@ -4312,9 +4315,9 @@ sub PSIBLAST_model{
 }
 
 # my $result = PP_value('A');
-# print $result;  # Êä³ö¶ÔÓ¦×Ö·û´®
+# print $result;  # è¾“å‡ºå¯¹åº”å­—ç¬¦ä¸²
 sub PP_value {
-    my $a = shift;  # »ñÈ¡´«ÈëµÄ×Ö·û
+    my $a = shift;  # è·å–ä¼ å…¥çš„å­—ç¬¦
     if ($a eq 'A') {
         return "1.28   0.05    1.00   0.31    6.11    0.42     0.23";
     } elsif ($a eq 'G') {
@@ -4362,9 +4365,9 @@ sub PP_value {
 
 sub get_amino_acid_atoms {
     my $aa = shift;    
-    # ±ê×¼»¯ÊäÈë£º×ª´óĞ´£¬Èç¹ûÊÇµ¥×ÖÄ¸Ôò×ªÎªÈı×ÖÄ¸
+    # æ ‡å‡†åŒ–è¾“å…¥ï¼šè½¬å¤§å†™ï¼Œå¦‚æœæ˜¯å•å­—æ¯åˆ™è½¬ä¸ºä¸‰å­—æ¯
     $aa = uc($aa);    
-    # µ¥×ÖÄ¸µ½Èı×ÖÄ¸µÄÓ³Éä
+    # å•å­—æ¯åˆ°ä¸‰å­—æ¯çš„æ˜ å°„
     my %one_to_three = (
         'A' => 'ALA', 'R' => 'ARG', 'N' => 'ASN', 'D' => 'ASP',
         'C' => 'CYS', 'E' => 'GLU', 'Q' => 'GLN', 'G' => 'GLY',
@@ -4373,12 +4376,12 @@ sub get_amino_acid_atoms {
         'T' => 'THR', 'W' => 'TRP', 'Y' => 'TYR', 'V' => 'VAL'
     );
     
-    # Èç¹ûÊÇµ¥×ÖÄ¸£¬×ª»»ÎªÈı×ÖÄ¸
+    # å¦‚æœæ˜¯å•å­—æ¯ï¼Œè½¬æ¢ä¸ºä¸‰å­—æ¯
     if (length($aa) == 1 && exists $one_to_three{$aa}) {
         $aa = $one_to_three{$aa};
     }
     
-    # °±»ùËáÔ­×ÓÊı¾İ
+    # æ°¨åŸºé…¸åŸå­æ•°æ®
     my %aa_atoms = (
         'ALA' => ['N', 'CA', 'C', 'O', 'CB'],
         'ARG' => ['N', 'CA', 'C', 'O', 'CB', 'CG', 'CD', 'NE', 'CZ', 'NH1', 'NH2'],
@@ -4402,19 +4405,19 @@ sub get_amino_acid_atoms {
         'VAL' => ['N', 'CA', 'C', 'O', 'CB', 'CG1', 'CG2']
     );
     
-    # ¼ì²é°±»ùËáÊÇ·ñ´æÔÚ
+    # æ£€æŸ¥æ°¨åŸºé…¸æ˜¯å¦å­˜åœ¨
     if (!exists $aa_atoms{$aa}) {
         die "Error: Unknown amino acid '$aa'\n";
     }
     
-    # ·µ»ØÔ­×ÓÁĞ±í
+    # è¿”å›åŸå­åˆ—è¡¨
     return @{$aa_atoms{$aa}};
     
-    # Ê¹ÓÃÊ¾Àı
+    # ä½¿ç”¨ç¤ºä¾‹
     # my @atoms = get_amino_acid_atoms('ALA');
     # print "ALA atoms: @atoms\n";
 
-    # @atoms = get_amino_acid_atoms('A');  # Ò²Ö§³Öµ¥×ÖÄ¸
+    # @atoms = get_amino_acid_atoms('A');  # ä¹Ÿæ”¯æŒå•å­—æ¯
     # print "A (ALA) atoms: @atoms\n";
 
     # @atoms = get_amino_acid_atoms('LYS');
@@ -4436,12 +4439,12 @@ sub get_propensities {
         'T' => [0.76, 1.23, 1.07], 'V' => [0.91, 1.86, 0.64],
         'W' => [1.06, 1.30, 0.79], 'Y' => [0.95, 1.50, 0.78]
     );
-    # Ê¹ÓÃÊ¾Àı£º
+    # ä½¿ç”¨ç¤ºä¾‹ï¼š
     # my $props = get_propensities();
-    # my $ala_prop = $props->{'A'};  # ·µ»Ø [1.39, 0.75, 0.80]
-    # my $helix_prop = $props->{'A'}[0];  # ·µ»Ø 1.39 (Helix)
-    # my $strand_prop = $props->{'A'}[1];  # ·µ»Ø 0.75 (Strand)
-    # my $coil_prop = $props->{'A'}[2];    # ·µ»Ø 0.80 (Coil)
+    # my $ala_prop = $props->{'A'};  # è¿”å› [1.39, 0.75, 0.80]
+    # my $helix_prop = $props->{'A'}[0];  # è¿”å› 1.39 (Helix)
+    # my $strand_prop = $props->{'A'}[1];  # è¿”å› 0.75 (Strand)
+    # my $coil_prop = $props->{'A'}[2];    # è¿”å› 0.80 (Coil)
     return \%propensities;
 }
 
@@ -4502,13 +4505,13 @@ sub run_consensus_prediction{ ##### smooth the SS prediction
     return $ss_str;
 }
 
-# ´´½¨Ò»¸öĞÂµÄÏòÁ¿
+# åˆ›å»ºä¸€ä¸ªæ–°çš„å‘é‡
 sub vector3d_new {
     my ($x, $y, $z) = @_;
     return { x => $x, y => $y, z => $z };
 }
 
-# ÏòÁ¿¼Ó·¨
+# å‘é‡åŠ æ³•
 sub vector3d_add {
     my ($v1, $v2) = @_;
     return vector3d_new(
@@ -4518,7 +4521,7 @@ sub vector3d_add {
     );
 }
 
-# ÏòÁ¿²æ»ı
+# å‘é‡å‰ç§¯
 sub vector3d_cross {
     my ($v1, $v2) = @_;
     return vector3d_new(
@@ -4528,25 +4531,25 @@ sub vector3d_cross {
     );
 }
 
-# ÏòÁ¿Ä£µÄÆ½·½
+# å‘é‡æ¨¡çš„å¹³æ–¹
 sub vector3d_mod2 {
     my ($v) = @_;
     return $v->{x}**2 + $v->{y}**2 + $v->{z}**2;
 }
 
-# »ñÈ¡ÏòÁ¿×ø±ê
+# è·å–å‘é‡åæ ‡
 sub vector3d_get_coords {
     my ($v) = @_;
     return ($v->{x}, $v->{y}, $v->{z});
 }
 
-# ÏòÁ¿×ª×Ö·û´®
+# å‘é‡è½¬å­—ç¬¦ä¸²
 sub vector3d_to_string {
     my ($v) = @_;
     return sprintf("(%d, %d, %d)", $v->{x}, $v->{y}, $v->{z});
 }
 
-# ËÄÉáÎåÈë¸¨Öúº¯Êı
+# å››èˆäº”å…¥è¾…åŠ©å‡½æ•°
 sub _round {
     my ($value) = @_;
     return int($value + 0.5);
