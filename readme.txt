@@ -3,6 +3,8 @@ by combining different methods.
 
 The Neural network algorithm was adopted for modeling. After testing, the Q3 accuracy exceeded 85%.
 
+It requires no external dependency packages, as the software package includes all the components needed for operation. It can run directly from the command line on Windows systems.
+
 Install
 The program can be run after the perl is installed. 
 The perl program is deposited in the install directory.
