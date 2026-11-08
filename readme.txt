@@ -1,6 +1,8 @@
 MetaSS is a meta method for predicting protein secondary structure 
 by combining different methods. 
 
+The Neural network algorithm was adopted for modeling. After testing, the Q3 accuracy exceeded 85%.
+
 Install
 The program can be run after the perl is installed. 
 The perl program is deposited in the install directory.
